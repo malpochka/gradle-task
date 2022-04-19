@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.6.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+    id 'java-library'
 }
 
 group = 'by.itsupportme'
@@ -12,12 +12,29 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    api 'org.hibernate:hibernate-core:5.6.5.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }
+
+task gitClone(type: Exec) {
+    description 'Clone git.'
+    commandLine "git", "clone", "https://github.com/malpochka/modul6_task2.git"
+}
+
+task copyFile(type: Copy) {
+    from 'D:\\фото'
+    into 'D:\\testGradle.'// if testGradle is npt exist, it will be done automatically
+    include '**/*'
+//    include '**/*.gif'
+//    include '**/*.jpg'
+}
+
