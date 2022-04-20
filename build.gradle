@@ -1,3 +1,5 @@
+import java.nio.file.Files
+
 plugins {
     id 'org.springframework.boot' version '2.6.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -30,11 +32,30 @@ task gitClone(type: Exec) {
     commandLine "git", "clone", "https://github.com/malpochka/modul6_task2.git"
 }
 
-task copyFile(type: Copy) {
-    from 'D:\\фото'
-    into 'D:\\testGradle.'// if testGradle is npt exist, it will be done automatically
-    include '**/*'
-//    include '**/*.gif'
-//    include '**/*.jpg'
+class CopyFile extends DefaultTask {
+    @TaskAction
+    void myTask() {
+        try {
+            File folder = new File("D:\\фото");
+
+            File[] listOfFiles = folder.listFiles();
+
+            if (listOfFiles != null)
+                for (File file : listOfFiles) {
+                    Files.copy(file.toPath(), new File("D:\\testGradle"
+                            + File.separator + file.getName()).toPath());
+                }
+
+            System.out.println("Done!");
+        } catch (IOException) {
+            System.err.println("Problem with file."+
+                    "One of the problems may be that the file exists in this directory");
+        }
+    }
 }
+
+tasks.register('copy', CopyFile)
+
+
+
 
