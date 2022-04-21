@@ -9,9 +9,10 @@ import java.nio.file.Files;
 
 public class CopyFiles extends DefaultTask {
     @TaskAction
-    void myTask() {
+   public void myTask() {
+
         try {
-            File folder = new File("D:\\фото");
+            File folder = new File("D:\\photo");
 
             File[] listOfFiles = folder.listFiles();
 

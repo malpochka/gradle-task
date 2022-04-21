@@ -6,6 +6,6 @@ import org.gradle.api.Project;
 public class MyPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
-        project.getTasks().create("copy",CopyFiles.class);
+        project.getTasks().create("copy", CopyFiles.class);
     }
 }

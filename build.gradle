@@ -1,10 +1,9 @@
-
 plugins {
     id 'org.springframework.boot' version '2.6.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java-library'
     id 'java-gradle-plugin'
-
+    id 'my-plugin'
 }
 
 group = 'by.itsupportme'
@@ -20,9 +19,15 @@ dependencies {
     implementation gradleApi()
     api 'org.hibernate:hibernate-core:5.6.5.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
-
-
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+    }
+}
 test {
     useJUnitPlatform()
     testLogging {
@@ -35,28 +40,3 @@ task gitClone(type: Exec) {
     commandLine "git", "clone", "https://github.com/malpochka/modul6_task2.git"
 }
 
-apply plugin: 'by.itsupportme'
-
-//class CopyFile extends DefaultTask {
-//    @TaskAction
-//    void myTask() {
-//        try {
-//            File folder = new File("D:\\фото");
-//
-//            File[] listOfFiles = folder.listFiles();
-//
-//            if (listOfFiles != null)
-//                for (File file : listOfFiles) {
-//                    Files.copy(file.toPath(), new File("D:\\testGradle"
-//                            + File.separator + file.getName()).toPath());
-//                }
-//
-//            System.out.println("Done!");
-//        } catch (IOException) {
-//            System.err.println("Problem with file." +
-//                    "One of the problems may be that the file exists in this directory");
-//        }
-//    }
-//}
-
-//tasks.register('copy', CopyFile)
